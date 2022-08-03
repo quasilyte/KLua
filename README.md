@@ -6,6 +6,14 @@ KLua is a [FFI](https://www.php.net/manual/ru/class.ffi.php)-based [Lua5](https:
 
 TODO
 
+## Quick start
+
+```php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+```
+
 ## Value conversion
 
 | PHP Type | Lua Type | Operation Cost |
@@ -36,10 +44,6 @@ All `KLua` class methods are static.
 * `init($config)`
 * `close()`
 
-`KLua` utility methods:
-
-* `getStats()`
-
 `KLua` main methods:
 
 * `eval($code)`
@@ -50,9 +54,16 @@ All `KLua` class methods are static.
 * `call($func_name, ...$args)`
 * `callStaticMethod($table_name, $method_name, ...$args)`
 * `callMethod($table_name, ...$args)`
+
+`KLua` call builder methods:
+
 * `callBuilder($func_name)`
 * `staticMethodCallBuilder($table_name, $method_name)`
 * `methodCallBuilder($table_name, $method_name)`
+
+`KLua` utility methods:
+
+* `getStats()`
 
 ### KLua::loadFFI
 
