@@ -31,6 +31,23 @@ KLua::eval('
 var_dump(KLua::call('example', 10)); // => 11
 ```
 
+Running with PHP:
+
+```bash
+$ php -d opcache.enable_cli=1 -d opcache.preload=preload.php -f example.php
+float(11)
+```
+
+Running with KPHP:
+
+```bash
+# Compile
+$ kphp --mode cli --enable-ffi --composer-root $(pwd) example.php
+# Execute
+$ ./kphp_out/cli
+float(11)
+```
+
 ## Value conversion
 
 | PHP Type | Lua Type | Operation Cost |
