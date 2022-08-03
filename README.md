@@ -12,6 +12,23 @@ TODO
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
+
+use KLua\KLua;
+use KLua\KLuaConfig;
+
+// For PHP, loadFFI() is called from preload script.
+// For KPHP, loadFFI() can be called in the beginning of the script.
+if (KPHP_COMPILER_VERSION) { KLua::loadFFI(); }
+
+KLua::init(new KLuaConfig());
+
+KLua::eval('
+    function example(x)
+        return x + 1
+    end
+');
+
+var_dump(KLua::call('example', 10)); // => 11
 ```
 
 ## Value conversion
@@ -200,17 +217,26 @@ function registerFunction1($func_name, $fn);
  */
 function registerFunction2($func_name, $fn);
 
-// ...etc, up to registerFunction5
+// ... and also registerFunction3 and registerFunction4
 ```
 
 The bound PHP functions should respect these rules:
 
 * Depending on the params count, appropriate register function should be used
 * A function should return a Lua-convertible value
+* A PHP function that is called from Lua should never throw an exception
 
 When PHP function is called from Lua, all arguments are converted following
 the conversion rules described previously. Registered PHP function receives
 the values that are already converted.
+
+Example:
+
+```php
+KLua::registerFunction2('phpconcat', static function ($x, $y) {
+    return $x . $y;
+});
+```
 
 ### KLua::call
 
