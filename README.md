@@ -4,7 +4,65 @@ KLua is a [FFI](https://www.php.net/manual/ru/class.ffi.php)-based [Lua5](https:
 
 ## Installation
 
-TODO
+Since this is a FFI library, it needs a dynamic library available during the run time.
+
+Installation steps:
+
+1. Install liblua5 in your system (if you don't have it already)
+2. Locate the library file and place in under `./ffilibs/liblua5`
+3. Install this composer package to use KLua classes inside your code
+
+Depending on your system, you need to find `liblua.so`, `liblua.dylib`
+or `liblua.dll` file. Then you can copy it to the application root `ffilibs` folder
+under the `liblua5` name (note: no extension suffixes).
+
+If you're having difficulties locating the library file, use a helper script:
+
+```bash
+$ php -f locate_lib.php
+note: can't locate liblua5.4, maybe it's not installed
+library candidate: /lib/x86_64-linux-gnu/liblua5.3.so.0
+library candidate: /lib/x86_64-linux-gnu/liblua5.3.so
+
+run something like this to make it discoverable (unix):
+	mkdir -p ffilibs && sudo ln -s /lib/x86_64-linux-gnu/liblua5.3.so ./ffilibs/liblua5.3
+```
+
+Then install the composer library itself:
+
+```bash
+$ composer require quasilyte/klua
+```
+
+Notes:
+
+* If you want to place library files/links globally, make `./ffilibs` a symlink
+* You'll probably want to add `ffilibs/` to your gitignore
+
+## Examples
+
+* [simple.php](examples/simple.php) - a simple overview of the API basics
+* [limited_stdlib.php](examples/limited_stdlib.php) - how to limit the stdlib access to Lua scripts
+* [phpfunc.php](examples/phpfunc.php) - how to bind PHP functions to Lua
+* [override_print.php](examples/override_print.php) - override Lua `print()` stdlib function
+* [plugin_sandbox.php](examples/plugin_sandbox.php) - how to load several plugins without conflicts
+
+Running examples with PHP:
+
+```bash
+$ php -d opcache.enable_cli=1\
+      -d opcache.preload=preload.php\
+      -f ./examples/simple.php
+```
+
+Running examples with KPHP:
+
+```bash
+# Step 1: compile the example:
+$ kphp --enable-ffi --mode cli --composer-root $(pwd) ./examples/simple.php
+# Step 2: run the binary:
+$ ./kphp_out/cli
+```
 
 ## Quick start
 
@@ -93,14 +151,14 @@ All `KLua` class methods are static.
 * `getVar($var_name)`
 * `registerFunction($func_name, $php_func)`
 * `call($func_name, ...$args)`
-* `callStaticMethod($table_name, $method_name, ...$args)`
+* `callStaticMethod($table_name, $table_key, ...$args)`
 * `callMethod($table_name, ...$args)`
 
 `KLua` call builder methods:
 
 * `callBuilder($func_name)`
-* `staticMethodCallBuilder($table_name, $method_name)`
-* `methodCallBuilder($table_name, $method_name)`
+* `staticMethodCallBuilder($table_name, $table_key)`
+* `methodCallBuilder($table_name, $table_key)`
 
 `KLua` utility methods:
 
@@ -284,36 +342,40 @@ The Lua function results are returned as follow:
 ```php
 /**
  * @param string $table_name - Lua global variable name (should be table-typed)
- * @param string $method_name - a function-typed field name inside selected table
+ * @param string|int $table_key - a function-typed field name inside selected table
  * @param mixed[] $args - PHP values to be passed as Lua function arguments
  * @return mixed - a Lua function call result converted to PHP value
  * @throws KLuaException
  */
-function callStaticMethod($table_name, $method_name, ...$args);
+function callStaticMethod($table_name, $table_key, ...$args);
 ```
 
 Like `call()`, but the function is searched inside a table.
 
 The table itself is not passed as an argument to that method.
-In other words, it behaves like `$table_name.$method_name($args...)`.
+In other words, it behaves like `$table_name.$table_key($args...)`.
+
+Table key can be an integer (for sequence-like tables).
 
 ### KLua::callMethod
 
 ```php
 /**
  * @param string $table_name - Lua global variable name (should be table-typed)
- * @param string $method_name - a function-typed field name inside selected table
+ * @param string|int $table_key - a function-typed field name inside selected table
  * @param mixed[] $args - PHP values to be passed as Lua function arguments
  * @return mixed - a Lua function call result converted to PHP value
  * @throws KLuaException
  */
-function callMethod($table_name, $method_name, ...$args);
+function callMethod($table_name, $table_key, ...$args);
 ```
 
 Like `call()`, but the function is searched inside a table.
 
 Passes the table as a first parameter of the method.
-In other words, it behaves like `$table_name:$method_name($args...)`.
+In other words, it behaves like `$table_name:$table_key($args...)`.
+
+Table key can be an integer (for sequence-like tables).
 
 ### KLua::callBuilder
 
@@ -341,32 +403,36 @@ If `$func_name` doesn't exist, null is returned.
 ```php
 /**
  * @param string $table_name - Lua global variable name (should be table-typed)
- * @param string $method_name - a function-typed field name inside selected table
+ * @param string|int $table_key - a function-typed field name inside selected table
  * @return KLuaMethodCallBuilder - a Lua call builder
  * @throws KLuaException
  */
-function staticMethodCallBuilder($table_name, $method_name, ...$args);
+function staticMethodCallBuilder($table_name, $table_key, ...$args);
 ```
 
 Like `callBuilder()`, but for static method calls.
 
-If `$table_name` or `$table_name->$method_name` doesn't exist, null is returned.
+If `$table_name` or `$table_name->$table_key` doesn't exist, null is returned.
+
+Table key can be an integer (for sequence-like tables).
 
 ### KLua::methodCallBuilder
 
 ```php
 /**
  * @param string $table_name - Lua global variable name (should be table-typed)
- * @param string $method_name - a function-typed field name inside selected table
+ * @param string|int $table_key - a function-typed field name inside selected table
  * @return KLuaMethodCallBuilder - a Lua call builder
  * @throws KLuaException
  */
-function methodCallBuilder($table_name, $method_name, ...$args);
+function methodCallBuilder($table_name, $table_key, ...$args);
 ```
 
 Like `callBuilder()`, but for instance method calls.
 
-If `$table_name` or `$table_name->$method_name` doesn't exist, null is returned.
+If `$table_name` or `$table_name->$table_key` doesn't exist, null is returned.
+
+Table key can be an integer (for sequence-like tables).
 
 ### Call builder API
 
