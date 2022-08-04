@@ -188,7 +188,24 @@ function init($config);
 
 It's usually only necessary to call this method exactly once.
 
-See the `KLuaConfig` fields to learn the configuration details.
+`KLuaConfig` has public properties that can be modified:
+
+```
+class KLuaConfig {
+  public $use_ffi_allocator = true;
+  public $pack_lua_tables = true;
+  public $lua_max_stack = 1000000;
+  public $preload_stdlib = null;
+}
+```
+
+`$use_ffi_allocator`: whether to use FFI-based allocator (PHP/KPHP memory managers) instead of the default liblua allocator. It's recommended to use FFI-based allocators, but you may need to test what works better for you.
+
+`$pack_lua_tables`: whether this library needs to try converting from Lua conventional array-like tables into PHP list-like arrays. Otherwise it will return arrays as is with 1-based indexing.
+
+`$lua_max_stack`: a value of `LUAI_MAXSTACK` that was used during the liblua compilation. You probably don't need to change this value, unless you compiled Lua with custom options.
+
+`$preload_stdlib`: a list of stdlib library names to preload. A null value (default) means "all libraries". It will result in KLua calling `luaL_openlibs()`. An empty array means "preload nothing". Otherwise it's interpreted as a list of libraries to preload.
 
 ### KLua::close
 
