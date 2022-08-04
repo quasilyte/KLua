@@ -129,8 +129,7 @@ Both languages should communicate to each other using the simpler protocols.
 If some value can't be converted properly, a special error-like value is produced instead.
 
 ```
-PHP: ['_error' => 'error message']
-Lua: {_error = 'error message'}
+['_error' => 'error message']
 ```
 
 ## API reference
