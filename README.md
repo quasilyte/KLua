@@ -190,7 +190,7 @@ It's usually only necessary to call this method exactly once.
 
 `KLuaConfig` has public properties that can be modified:
 
-```
+```php
 class KLuaConfig {
   public $use_ffi_allocator = true;
   public $pack_lua_tables = true;
