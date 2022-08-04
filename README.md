@@ -68,6 +68,13 @@ tables as list-like PHP arrays.
 Not every PHP value can be converted to a Lua value and vice versa.
 Both languages should communicate to each other using the simpler protocols.
 
+If some value can't be converted properly, a special error-like value is produced instead.
+
+```
+PHP: ['_error' => 'error message']
+Lua: {_error = 'error message'}
+```
+
 ## API reference
 
 All `KLua` class methods are static.
@@ -108,6 +115,7 @@ function loadFFI();
 Perform the `FFI::load()`.
 
 For PHP, call this function from the opcache preload script.
+
 For KPHP, call this function once under the `if (kphp)` condition.
 
 ### KLua::init
@@ -184,7 +192,6 @@ If the specified file can't be read, an exception is thrown.
 /**
  * @param string $var_name - Lua global variable name
  * @param mixed $value - a PHP value to be assigned to the specified Lua variable
- * @throws KLuaException
  */
 function setVar($var_name, $value);
 ```
@@ -194,15 +201,12 @@ function setVar($var_name, $value);
 If no such variable exists, it will be created.
 If variable already exists, its value will be updated.
 
-`setVar()` will throw an exception if `$value` can't be converted to Lua value.
-
 ### KLua::getVar
 
 ```php
 /**
  * @param string $var_name - Lua global variable name
  * @return mixed - a Lua variable converted to PHP value
- * @throws KLuaException
  */
 function getVar($var_name);
 ```
@@ -210,8 +214,6 @@ function getVar($var_name);
 `getVar()` returns the global Lua variable value.
 
 If variable doesn't exist, null is returned.
-
-`getVar()` will throw an exception if `$var_name` value can't be converted to PHP value.
 
 ### KLua::registerFunction
 
