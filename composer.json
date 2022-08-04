@@ -1,0 +1,27 @@
+{
+    "name": "quasilyte/klua",
+    "description": "FFI-based Lua5 library that can be used in both PHP and KPHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Iskander Sharipov",
+            "email": "quasilyte@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "vkcom/kphp-polyfills": "^1.0",
+        "quasilyte/kfinalize": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "KLua\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.16",
+        "vkcom/kphpunit": "v1.0.0",
+        "vkcom/ktest-script": "^0.7.0"
+    }
+}
