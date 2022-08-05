@@ -46,6 +46,7 @@ Notes:
 * [override_print.php](examples/3_override_print.php) - override Lua `print()` stdlib function
 * [limited_stdlib.php](examples/4_limited_stdlib.php) - how to limit the stdlib access to Lua scripts
 * [plugin_sandbox.php](examples/5_plugin_sandbox.php) - how to load several plugins without conflicts
+* [phpfunc_table.php](examples/6_phpfunc_table.php) - how to create module-like native libraries
 
 Running examples with PHP:
 
