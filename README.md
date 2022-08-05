@@ -41,11 +41,12 @@ Notes:
 
 ## Examples
 
-* [simple.php](examples/simple.php) - a simple overview of the API basics
-* [limited_stdlib.php](examples/limited_stdlib.php) - how to limit the stdlib access to Lua scripts
-* [phpfunc.php](examples/phpfunc.php) - how to bind PHP functions to Lua
-* [override_print.php](examples/override_print.php) - override Lua `print()` stdlib function
-* [plugin_sandbox.php](examples/plugin_sandbox.php) - how to load several plugins without conflicts
+* [simple.php](examples/1_simple.php) - a simple overview of the API basics
+* [phpfunc.php](examples/2_phpfunc.php) - how to bind PHP functions to Lua
+* [override_print.php](examples/3_override_print.php) - override Lua `print()` stdlib function
+* [limited_stdlib.php](examples/4_limited_stdlib.php) - how to limit the stdlib access to Lua scripts
+* [plugin_sandbox.php](examples/5_plugin_sandbox.php) - how to load several plugins without conflicts
+* [coroutines.php](examples/6_coroutines.php) - using coroutine API from PHP
 
 Running examples with PHP:
 

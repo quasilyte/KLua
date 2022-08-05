@@ -12,8 +12,8 @@ test-kphp:
 
 .PHONY: test-examples
 test-examples:
-	./vendor/bin/ktest compare --preload preload.php ./examples/simple.php
-	./vendor/bin/ktest compare --preload preload.php ./examples/phpfunc.php
-	./vendor/bin/ktest compare --preload preload.php ./examples/override_print.php
-	./vendor/bin/ktest compare --preload preload.php ./examples/limited_stdlib.php
-	./vendor/bin/ktest compare --preload preload.php ./examples/plugin_sandbox.php
+	./vendor/bin/ktest compare --preload preload.php ./examples/1_simple.php
+	./vendor/bin/ktest compare --preload preload.php ./examples/2_phpfunc.php
+	./vendor/bin/ktest compare --preload preload.php ./examples/3_override_print.php
+	./vendor/bin/ktest compare --preload preload.php ./examples/4_limited_stdlib.php
+	./vendor/bin/ktest compare --preload preload.php ./examples/5_plugin_sandbox.php
