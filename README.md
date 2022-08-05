@@ -151,7 +151,7 @@ All `KLua` class methods are static.
 * `registerFunction($func_name, $php_func)`
 * `call($func_name, ...$args)`
 * `callStaticMethod($table_name, $table_key, ...$args)`
-* `callMethod($table_name, ...$args)`
+* `callMethod($table_name, $table_key, ...$args)`
 
 `KLua` call builder methods:
 
