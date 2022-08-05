@@ -218,6 +218,10 @@ function close();
 
 All memory that is still retained by Lua will be reclaimed.
 
+If you don't call `close()` yourself, it will be called during the script shutdown automatically.
+
+You don't have to call it yourself, but if you application does a lot of work and Lua scripting is a very isolated and short portion of its workflow, you may want to close Lua runtime in order to reclaim the memory it was using.
+
 ### KLua::eval
 
 ```php
