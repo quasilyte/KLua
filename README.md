@@ -60,7 +60,7 @@ Running examples with KPHP:
 
 ```bash
 # Step 1: compile the example:
-$ kphp --enable-ffi --mode cli --composer-root $(pwd) ./examples/simple.php
+$ kphp --mode cli --composer-root $(pwd) ./examples/simple.php
 # Step 2: run the binary:
 $ ./kphp_out/cli
 ```
@@ -101,7 +101,7 @@ Running with KPHP:
 
 ```bash
 # Compile
-$ kphp --mode cli --enable-ffi --composer-root $(pwd) example.php
+$ kphp --mode cli --composer-root $(pwd) example.php
 # Execute
 $ ./kphp_out/cli
 float(11)
