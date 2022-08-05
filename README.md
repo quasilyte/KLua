@@ -450,6 +450,34 @@ If `$table_name` or `$table_name->$table_key` doesn't exist, null is returned.
 
 Table key can be an integer (for sequence-like tables).
 
+### KLua::getStats
+
+```php
+/**
+ * @return KLuaStats
+ */
+function getStats();
+```
+
+`getStats` returns the information about the currently running Lua instance.
+
+`KLuaStats` object has public properties that can be inspected:
+
+```php
+class KLuaStats {
+    /** How much memory Lua runtime is using right now. */
+    public $mem_usage = 0;
+
+    /** How many bytes Lua runtime allocated up to this point. */
+    public $mem_alloc_bytes_total = 0;
+
+    /** How many memory allocations Lua runtime performed up to this point. */
+    public $mem_allocs_total = 0;
+}
+```
+
+After `KLua::close()`, the `$stats->mem_usage` should be 0.
+
 ### Call builder API
 
 To make a call using a builder:
