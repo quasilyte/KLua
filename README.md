@@ -187,7 +187,7 @@ function init($config);
 
 `init()` prepares the Lua state and binds it to this class static members.
 
-It's usually only necessary to call this method exactly once.
+It's usually only necessary to call this method exactly once, unless you need to reset the Lua state and run some code inside different context. So, `init()` can be used as reset too.
 
 `KLuaConfig` has public properties that can be modified:
 
