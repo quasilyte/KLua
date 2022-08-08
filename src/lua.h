@@ -55,8 +55,11 @@ lua_Unsigned lua_rawlen(lua_State *L, int index);
 void lua_len(lua_State *L, int index);
 int lua_next(lua_State *L, int index);
 
+// @kphp-ffi-signalsafe
 void lua_pushnil(lua_State *L);
+// @kphp-ffi-signalsafe
 void lua_pushboolean(lua_State *L, int b);
+// @kphp-ffi-signalsafe
 void lua_pushnumber(lua_State *L, lua_Number n);
 const char *lua_pushlstring(lua_State *L, const char *s, size_t len);
 void lua_pushcclosure(lua_State *L, lua_CFunction fn, int n);
