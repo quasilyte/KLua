@@ -344,7 +344,7 @@ class KLuaInternal {
      */
     public static function eval($code) {
         $stack_top = self::$lib->lua_gettop(self::$state);
-        $status = self::$lib->luaL_loadstring(self::$state, $code);
+        $status = self::$lib->luaL_loadbufferx(self::$state, $code, strlen($code), $code, null);
         if ($status) {
             $error_message = (string)self::stackPop();
             throw new KLuaException("eval: load code: $error_message");
@@ -592,7 +592,7 @@ class KLuaInternal {
     }
 
     public static function stackTop() {
-        return self::stackGet(self::$lib->lua_gettop(self::$state));
+        return self::stackGet(-1);
     }
 
     public static function stackGet($index) {
@@ -622,6 +622,9 @@ class KLuaInternal {
      * @param int $index
      */
     public static function stackGetTable($index) {
+        if ($index === -1) {
+            $index = self::$lib->lua_gettop(self::$state);
+        }
         self::$lib->lua_pushnil(self::$state);
         if (self::$lib->lua_next(self::$state, $index) === 0) {
             return [];

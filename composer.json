@@ -12,7 +12,8 @@
     "require": {
         "php": ">=7.4",
         "vkcom/kphp-polyfills": "^1.0",
-        "quasilyte/kfinalize": "^1.0"
+        "quasilyte/kfinalize": "^1.0",
+        "vkcom/ktest-script": "^0.7.4"
     },
     "autoload": {
         "psr-4": {
@@ -21,7 +22,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "9.5.16",
-        "vkcom/kphpunit": "v1.0.0",
-        "vkcom/ktest-script": "^0.7.0"
+        "vkcom/kphpunit": "v1.0.0"
     }
 }
