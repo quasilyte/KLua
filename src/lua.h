@@ -7,7 +7,7 @@ typedef int64_t lua_Integer;
 typedef uint64_t lua_Unsigned;
 typedef double lua_Number;
 
-typedef uint64_t lua_KContext;
+typedef intptr_t lua_KContext;
 
 typedef int (*lua_CFunction) (lua_State *L);
 
