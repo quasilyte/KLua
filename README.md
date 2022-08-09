@@ -1,3 +1,5 @@
+![](docs/logo.png)
+
 # KLua
 
 KLua is a [FFI](https://www.php.net/manual/ru/class.ffi.php)-based [Lua5](https://www.lua.org) library that can be used in both PHP and [KPHP](github.com/VKCOM/kphp).
