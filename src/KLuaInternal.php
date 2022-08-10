@@ -683,7 +683,10 @@ class KLuaInternal {
         return $result;
     }
 
-    public static function stackDiscard(int $n) {
+    /**
+     * @param int $n
+     */
+    public static function stackDiscard($n) {
         self::$lib->lua_settop(self::$state, -($n) - 1);
     }
 
