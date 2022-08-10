@@ -538,7 +538,7 @@ class KLuaInternal {
      * @param mixed $value
      */
     public static function stackPushArray($value) {
-        if (self::arrayIsList($value)) {
+        if (array_is_list($value)) {
             self::$lib->lua_createtable(self::$state, count($value), 0);
             $table_index = 1; // Lua array-like tables indexes start from 1
             foreach ($value as $elem) {
@@ -709,13 +709,6 @@ class KLuaInternal {
             default:
                 return self::stackPopList($num_results);
         }
-    }
-
-    public static function arrayIsList($arr) {
-#ifndef KPHP
-        return array_is_list($arr);
-#endif
-        return array_is_vector($arr);
     }
 
     public static function checkStack() {
