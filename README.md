@@ -147,7 +147,7 @@ All `KLua` class methods are static.
 `KLua` initialization methods:
 
 * `loadFFI()`
-* `init($config)`
+* [`init($config)`](docs/api_reference.md#kluainit)
 * `close()`
 
 `KLua` main methods:
