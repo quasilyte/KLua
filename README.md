@@ -146,29 +146,29 @@ All `KLua` class methods are static.
 
 `KLua` initialization methods:
 
-* `loadFFI()`
+* [`loadFFI()`](docs/api_reference.md#klualoadffi)
 * [`init($config)`](docs/api_reference.md#kluainit)
-* `close()`
+* [`close()`](docs/api_reference.md#kluaclose)
 
 `KLua` main methods:
 
-* `eval($code)`
-* `evalScript($filename)`
-* `setVar($var_name, $value)`
-* `setVarUserData($var_name, $ptr)`
-* `getVar($var_name)`
-* `registerFunction($func_name, $php_func)`
-* `userDataPtr($addr)`
-* `call($func_name, ...$args)`
-* `callStaticMethod($table_name, $table_key, ...$args)`
-* `callMethod($table_name, $table_key, ...$args)`
+* [`eval($code)`](docs/api_reference.md#kluaeval)
+* [`evalScript($filename)`](docs/api_reference.md#kluaevalscript)
+* [`setVar($var_name, $value)`](docs/api_reference.md#kluasetvar)
+* [`setVarUserData($var_name, $ptr)`](docs/api_reference.md#kluasetvaruserdata)
+* [`getVar($var_name)`](docs/api_reference.md#kluagetvar)
+* [`registerFunction($func_name, $php_func)`](docs/api_reference.md#kluaregisterfunction)
+* [`userDataPtr($addr)`](docs/api_reference.md#kluauserdataptr)
+* [`call($func_name, ...$args)`](docs/api_reference.md#kluacall)
+* [`callStaticMethod($table_name, $table_key, ...$args)`](docs/api_reference.md#kluacallstaticmethod)
+* [`callMethod($table_name, $table_key, ...$args)`](docs/api_reference.md#kluacallmethod)
 
 `KLua` call builder methods:
 
-* `callBuilder($func_name)`
-* `staticMethodCallBuilder($table_name, $table_key)`
-* `methodCallBuilder($table_name, $table_key)`
+* [`callBuilder($func_name)`](docs/api_reference.md#kluacallbuilder)
+* [`staticMethodCallBuilder($table_name, $table_key)`](docs/api_reference.md#kluastaticmethodcallbuilder)
+* [`methodCallBuilder($table_name, $table_key)`](docs/api_reference.md#kluamethodcallbuilder)
 
 `KLua` utility methods:
 
-* `getStats()`
+* [`getStats()`](docs/api_reference.md#kluagetstate)
