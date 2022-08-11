@@ -49,7 +49,7 @@ Notes:
 * [limited_stdlib.php](examples/4_limited_stdlib.php) - how to limit the stdlib access to Lua scripts
 * [plugin_sandbox.php](examples/5_plugin_sandbox.php) - how to load several plugins without conflicts
 * [phpfunc_table.php](examples/6_phpfunc_table.php) - how to create module-like native libraries
-* [userdata.php](examples/7_userdata.php) - how to use Lua "light userdata"
+* [userdata.php](examples/7_userdata.php) - how to use Lua [light userdata](https://www.lua.org/pil/28.5.html)
 
 Running examples with PHP:
 
