@@ -72,6 +72,15 @@ class KLuaCallBuilder {
     }
 
     /**
+     * @param ffi_cdata<C, void*> $value
+     */
+    public function pushUserData($value) {
+        $this->num_args++;
+        KLuaInternal::$lib->lua_pushlightuserdata(KLuaInternal::$state, $value);
+        return $this;
+    }
+
+    /**
      * @return KLuaCallResult
      * @throws KLuaException
      */

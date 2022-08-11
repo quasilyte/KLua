@@ -49,13 +49,14 @@ Notes:
 * [limited_stdlib.php](examples/4_limited_stdlib.php) - how to limit the stdlib access to Lua scripts
 * [plugin_sandbox.php](examples/5_plugin_sandbox.php) - how to load several plugins without conflicts
 * [phpfunc_table.php](examples/6_phpfunc_table.php) - how to create module-like native libraries
+* [userdata.php](examples/7_userdata.php) - how to use Lua "light userdata"
 
 Running examples with PHP:
 
 ```bash
 $ php -d opcache.enable_cli=1\
       -d opcache.preload=preload.php\
-      -f ./examples/simple.php
+      -f ./examples/1_simple.php
 ```
 
 Running examples with KPHP:
@@ -135,6 +136,8 @@ If some value can't be converted properly, a special error-like value is produce
 ['_error' => 'error message']
 ```
 
+The [light userdata](https://www.lua.org/pil/28.5.html) is a special case. It can't be auto-converted from a PHP value, but there are `KLua::setVarUserData` and call builder API `pushUserData` functions to pass user data from PHP to Lua. When Lua->PHP conversion is performed, the user data address is stored as PHP `int` value. You can convert that `int` addr to the CData `void*` by using `KLua::userDataPtr`. See [userdata.php](examples/7_userdata.php) for the complete example.
+
 ## API reference
 
 All `KLua` class methods are static.
@@ -150,8 +153,10 @@ All `KLua` class methods are static.
 * `eval($code)`
 * `evalScript($filename)`
 * `setVar($var_name, $value)`
+* `setVarUserData($var_name, $ptr)`
 * `getVar($var_name)`
 * `registerFunction($func_name, $php_func)`
+* `userDataPtr($addr)`
 * `call($func_name, ...$args)`
 * `callStaticMethod($table_name, $table_key, ...$args)`
 * `callMethod($table_name, $table_key, ...$args)`
@@ -282,6 +287,19 @@ function setVar($var_name, $value);
 If no such variable exists, it will be created.
 If variable already exists, its value will be updated.
 
+### KLua::setVarUserData
+
+```php
+/**
+ * @param string $var_name - Lua global variable name
+ * @param ffi_cdata<C, void*> $ptr - a non-owning pointer to FFI object
+ */
+```
+
+`setVarUserData` is like `setVar`, but for Lua "light userdata".
+
+It's expected that value pointer by `$ptr` will live long enough.
+
 ### KLua::getVar
 
 ```php
@@ -337,6 +355,20 @@ KLua::registerFunction2('phpconcat', static function ($x, $y) {
     return $x . $y;
 });
 ```
+
+### KLua::
+
+```php
+/**
+ * @param int $addr - light userdata address
+ * @return ffi_cdata<C, void*> - an FFI CData pointer holding that address
+ */
+function userDataPtr($addr);
+```
+
+`userDataPtr` restores a CData pointer value from the address.
+
+The light userdata objects are converted to `int` during the Lua->PHP conversion. Use `usedDataPtr` to recover the CData `void*` pointer you passed to `setVarUserData` or `pushUserData`.
 
 ### KLua::call
 
@@ -505,6 +537,7 @@ Here is a list of argument pushing routines:
 * `pushNumber(float $v)` adds a float-typed value to the list
 * `pushString(string $v)` adds a string-typed value to the list
 * `pushTable(array $v)` adds an array-typed value to the list
+* `pushUserData(CData $ptr)` adds a light userdatata the list
 
 If function returns zero results, you may omit the step `(4)`.
 

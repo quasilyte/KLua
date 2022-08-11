@@ -324,6 +324,15 @@ class KLuaInternal {
 
     /**
      * @param string $var_name
+     * @param ffi_cdata<C, void*> $value
+     */
+    public static function setVarUserData($var_name, $value) {
+        self::$lib->lua_pushlightuserdata(self::$state, $value);
+        self::luaSetGlobal($var_name);
+    }
+
+    /**
+     * @param string $var_name
      */
     public static function luaSetGlobal($var_name) {
         self::$lib->lua_setglobal(self::$state, $var_name);
@@ -602,7 +611,7 @@ class KLuaInternal {
             case self::TBOOLEAN:
                 return (bool)self::$lib->lua_toboolean(self::$state, $index);
             case self::TLIGHTUSERDATA:
-                return ['_error' => "unsupported Lua->PHP type: light user data"];
+                return self::ptr2addr(self::$lib->lua_touserdata(self::$state, $index));
             case self::TNUMBER:
                 return self::$lib->lua_tonumberx(self::$state, $index, null);
             case self::TSTRING:
@@ -616,6 +625,22 @@ class KLuaInternal {
             default:
                 return ['_error' => "unsupported Lua->PHP type"];
         }
+    }
+
+    /**
+     * @param ffi_cdata<C, void*> $ptr
+     * @return int
+     */
+    public static function ptr2addr($ptr) {
+        return ffi_cast_ptr2addr($ptr);
+    }
+
+    /**
+     * @param int $addr
+     * @return ffi_cdata<C, void*>
+     */
+    public static function addr2ptr($addr) {
+        return ffi_cast_addr2ptr($addr);
     }
 
     /**

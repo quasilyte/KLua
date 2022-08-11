@@ -4,8 +4,23 @@ use KLua\KLua;
 use KLua\KLuaConfig;
 
 class BenchmarkKLua {
+    /** @var ffi_scope<testlib> */
+    private $lib;
+
+    /** @var ffi_cdata<testlib, struct BoxedInt> */
+    private $boxed_int;
+
     public function __construct() {
         if (KPHP_COMPILER_VERSION) { KLua::loadFFI(); }
+
+        $this->lib = FFI::cdef('
+            #define FFI_SCOPE "testlib"
+            struct BoxedInt {
+                int64_t value;
+            };
+        ');
+        $this->boxed_int = $this->lib->new('struct BoxedInt');
+        $this->boxed_int->value = 42;
 
         $config = new KLuaConfig();
         KLua::init($config);
@@ -20,6 +35,7 @@ class BenchmarkKLua {
         KLua::setVar('global_string', 'strvalue');
         KLua::setVar('global_array_table', [1, 2, 3]);
         KLua::setVar('global_map_table', ['foo' => 1, 'bar' => 2]);
+        KLua::setVarUserData('global_user_data', FFI::addr($this->boxed_int));
 
         KLua::registerFunction0('phpfunc0', static function () {
             return null;
@@ -131,23 +147,27 @@ class BenchmarkKLua {
     }
 
     public function benchmarkSetVarNil() {
-        return KLua::setVar('dummy', null);
+        KLua::setVar('dummy', null);
     }
 
     public function benchmarkSetVarNumber() {
-        return KLua::setVar('dummy', 10);
+        KLua::setVar('dummy', 10);
     }
 
     public function benchmarkSetVarString() {
-        return KLua::setVar('dummy', 'strvalue');
+        KLua::setVar('dummy', 'strvalue');
     }
 
     public function benchmarkSetVarArrayTable() {
-        return KLua::setVar('dummy', [1, 2, 3]);
+        KLua::setVar('dummy', [1, 2, 3]);
     }
 
     public function benchmarkSetVarMapTable() {
-        return KLua::setVar('dummy', ['foo' => 1, 'bar' => 2]);
+        KLua::setVar('dummy', ['foo' => 1, 'bar' => 2]);
+    }
+
+    public function benchmarkSetVarUserData() {
+        KLua::setVarUserData('dummy', FFI::addr($this->boxed_int));
     }
 
     public function benchmarkGetVarNil() {
@@ -168,5 +188,9 @@ class BenchmarkKLua {
 
     public function benchmarkGetVarMapTable() {
         return KLua::getVar('global_map_table');
+    }
+
+    public function benchmarkGetVarUserData() {
+        return KLua::getVar('global_user_data');
     }
 }

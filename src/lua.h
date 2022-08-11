@@ -63,6 +63,8 @@ void lua_pushboolean(lua_State *L, int b);
 void lua_pushnumber(lua_State *L, lua_Number n);
 const char *lua_pushlstring(lua_State *L, const char *s, size_t len);
 void lua_pushcclosure(lua_State *L, lua_CFunction fn, int n);
+// @kphp-ffi-signalsafe
+void lua_pushlightuserdata(lua_State *L, void *p);
 
 void lua_setglobal(lua_State *L, const char *name);
 int lua_getglobal(lua_State *L, const char *name);
@@ -72,3 +74,5 @@ const char *lua_tolstring(lua_State *L, int index, size_t *len);
 int lua_toboolean(lua_State *L, int index);
 // @kphp-ffi-signalsafe
 lua_Number lua_tonumberx(lua_State *L, int idx, int *isnum);
+// @kphp-ffi-signalsafe
+void *lua_touserdata(lua_State *L, int index);

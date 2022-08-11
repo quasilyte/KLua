@@ -81,6 +81,22 @@ class KLua {
     }
 
     /**
+     * @param string $var_name
+     * @param ffi_cdata<C, void*> $value
+     */
+    public static function setVarUserData($var_name, $value) {
+        KLuaInternal::setVarUserData($var_name, $value);
+    }
+
+    /**
+     * @param int $addr
+     * @return ffi_cdata<C, void*>
+     */
+    public static function userDataPtr($addr) {
+        return KLuaInternal::addr2ptr($addr);
+    }
+
+    /**
      * @return mixed
      */
     public static function getVar($var_name) {

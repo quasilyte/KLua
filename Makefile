@@ -18,3 +18,4 @@ test-examples:
 	./vendor/bin/ktest compare --preload preload.php ./examples/4_limited_stdlib.php
 	./vendor/bin/ktest compare --preload preload.php ./examples/5_plugin_sandbox.php
 	./vendor/bin/ktest compare --preload preload.php ./examples/6_phpfunc_table.php
+	./vendor/bin/ktest compare --preload preload.php ./examples/7_userdata.php
