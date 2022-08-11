@@ -140,7 +140,7 @@ The [light userdata](https://www.lua.org/pil/28.5.html) is a special case. It ca
 
 ## API reference
 
-See [api_reference.md](docs/api_reference.md).
+See [api_reference.md](docs/api_reference.md) for full documentation.
 
 All `KLua` class methods are static.
 
