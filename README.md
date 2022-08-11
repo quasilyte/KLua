@@ -356,7 +356,7 @@ KLua::registerFunction2('phpconcat', static function ($x, $y) {
 });
 ```
 
-### KLua::
+### KLua::userDataPtr
 
 ```php
 /**
