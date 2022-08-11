@@ -547,7 +547,7 @@ class KLuaInternal {
      * @param mixed $value
      */
     public static function stackPushArray($value) {
-        if (array_is_list($value)) {
+        if (false) {
             self::$lib->lua_createtable(self::$state, count($value), 0);
             $table_index = 1; // Lua array-like tables indexes start from 1
             foreach ($value as $elem) {
