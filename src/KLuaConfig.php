@@ -14,6 +14,23 @@ class KLuaConfig {
     public $use_ffi_allocator = true;
 
     /**
+     * A callback that is called every time Lua tries to allocate a memory.
+     *
+     * The callback gets a single argument: requested allocation size in bytes.
+     * The callback can use KLua::getStats() to see how much memory Lua
+     * is using right now.
+     *
+     * By default, there is no alloc hook, so nothing is called.
+     * A non-null callback should return false if allocator should reject
+     * the allocation request and yield null.
+     *
+     * This option work only when $use_ffi_allocator is true.
+     *
+     * @var callable(int):bool
+     */
+    public $alloc_hook = null;
+
+    /**
      * Whether this library needs to try converting from Lua
      * conventional array-like tables into PHP list-like arrays.
      * Otherwise it will return arrays as is with 1-based indexing.

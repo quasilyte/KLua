@@ -18,6 +18,9 @@ class KLuaInternal {
     public static $lua_max_stack = 1000000;
     public static $pack_lua_tables = true;
 
+    /** @var callable(int):bool */
+    public static $alloc_hook = null;
+
     /** @var (callable():mixed)[] */
     public static $phpfuncs0 = [];
     /** @var (callable(mixed):mixed)[] */
@@ -69,6 +72,7 @@ class KLuaInternal {
         self::$phpfuncs2 = [];
         self::$phpfuncs3 = [];
         self::$phpfuncs4 = [];
+        self::$alloc_hook = $config->alloc_hook;
 
         if (!self::$lib) {
             self::$lib = \FFI::scope('lua');
@@ -88,6 +92,14 @@ class KLuaInternal {
                         \FFI::free(\FFI::cast("uint8_t[$orig_size]", $ptr));
                     }
                     return null;
+                }
+                if (self::$alloc_hook) {
+                    // PHP has troubles with self::$alloc_hool(...) syntax,
+                    // so we're using a temporary variable here.
+                    $fn = self::$alloc_hook;
+                    if (!$fn($new_size)) {
+                        return null;
+                    }
                 }
                 if ($ptr === null) {
                     // malloc()
