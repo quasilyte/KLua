@@ -94,7 +94,7 @@ class KLuaInternal {
                     return null;
                 }
                 if (self::$alloc_hook) {
-                    // PHP has troubles with self::$alloc_hool(...) syntax,
+                    // PHP has troubles with self::$alloc_hook(...) syntax,
                     // so we're using a temporary variable here.
                     $fn = self::$alloc_hook;
                     if (!$fn($new_size)) {
