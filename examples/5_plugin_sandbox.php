@@ -17,6 +17,8 @@ KLua::init(new KLuaConfig());
 // To avoid that, we'll load every plugin inside isolated environment.
 // In the real life, you may want to do something more complicated.
 // This is just an example.
+//
+// Read http://lua-users.org/wiki/SandBoxes to learn more.
 
 // Every plugin defined main() function.
 // That's part of our plugin contract.
