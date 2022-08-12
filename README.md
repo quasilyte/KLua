@@ -46,7 +46,7 @@ Notes:
 * [simple.php](examples/1_simple.php) - a simple overview of the API basics
 * [phpfunc.php](examples/2_phpfunc.php) - how to bind PHP functions to Lua
 * [override_print.php](examples/3_override_print.php) - override Lua `print()` stdlib function
-* [limited_stdlib.php](examples/4_limited_stdlib.php) - how to limit the stdlib access to Lua scripts
+* [limited_stdlib.php](examples/4_limited_stdlib.php) - how to limit the stdlib access in Lua scripts
 * [plugin_sandbox.php](examples/5_plugin_sandbox.php) - how to load several plugins without conflicts
 * [phpfunc_table.php](examples/6_phpfunc_table.php) - how to create module-like native libraries
 * [userdata.php](examples/7_userdata.php) - how to use Lua [light userdata](https://www.lua.org/pil/28.5.html)
