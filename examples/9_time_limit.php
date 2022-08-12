@@ -59,9 +59,11 @@ try {
                 return fib(n-2)+fib(n-1)
             end
         end
+        local total=0
         for i=1, 1000000 do
-            print(fib(i))        
+            total = total + fib(i)
         end
+        print(total)
     ', 0.2);
 } catch (KLuaException $e) {
     // We can handle the error and continue normally.
